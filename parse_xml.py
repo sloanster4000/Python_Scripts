@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#Copyright (c) 2018 Ephraim Sloan
+#Copyright (c) 2018 Sloanster4000
 #Licensed under the terms of LICENSE included in this project
 
 import sys
