@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 # This script is a simple IP calculator
-# 10/13/2016:      Initial version [ERS]
+# 10/13/2016:      Initial version
 # 5/9/2017:        Add argparse module for command line flags.
+#Copyright (c) 2018 Sloanster4000
+#Licensed under the terms of LICENSE included in this project
+
 from netaddr import IPAddress, IPNetwork, IPRange
 from argparse import ArgumentParser
 
