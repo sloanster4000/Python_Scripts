@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
 # This script is a netcat replacment written in python
-# 05/08/2017:   Initial version [ERS]
-# 06/05/2017:   Add -v (verbose) to match original NetCat.[ERS]
-# 06/05/2017:   Uploaded to github.[ERS]
+# 05/08/2017:   Initial version.
+# 06/05/2017:   Add -v (verbose) to match original NetCat.
+# 06/05/2017:   Uploaded to github.
+
+#Copyright (c) 2018 Sloanster4000
+#Licensed under the terms of LICENSE included in this project
+
 import socket
 import argparse
 
