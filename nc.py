@@ -1,41 +1,36 @@
 #!/usr/bin/env python3
 # This script is a netcat replacment written in python
-# 05/08/2017:   Initial version.
-# 06/05/2017:   Add -v (verbose) to match original NetCat.
-# 06/05/2017:   Uploaded to github.
-
-#Copyright (c) 2018 Sloanster4000
-#Licensed under the terms of LICENSE included in this project
-
+# 05/08/2017:   Initial version [ERS]
+# 06/05/2017:   Add -v (verbose) to match original NetCat.[ERS]
+# 06/05/2017:   Uploaded to github.[ERS]
+# 05/21/2020:   Added socket timeout settings, changed port type as int and removed -v switch. [ERS]
+# 05/22/2020:   Added sys exceptions. [ERS]
+import sys
 import socket
 import argparse
 
-parser = argparse.ArgumentParser(description='Simple client socket implementation')
-parser.add_argument("-v", "--verbose", help="Print Verbose connection", action='store_true')
+#Accept aguments from user input
+parser = argparse.ArgumentParser(description='Netcat like port checker')
 parser.add_argument('host', help="Host address")
-parser.add_argument('port', help="Host port")
+parser.add_argument('port', help="Host port", type=int)
 args = parser.parse_args()
 
-if args.verbose:
+#Attempt a connection
+try:
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    while True:
-        try:
-            s.connect((args.host, int(args.port)))
-            print("Connected to", s.getpeername())
-            s.shutdown(socket.SHUT_WR)
-            s.close()
-            break
-        except OSError as err:
-            print(err)
-            break
-else:
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    while True:
-        try:
-            s.connect((args.host, int(args.port)))
-            s.shutdown(socket.SHUT_WR)
-            s.close()
-            break
-        except OSError as err:
-            print(err)
-            break
+    s.settimeout(5.5)
+    s.connect((args.host, args.port))
+    print(args.host, args.port, "open")
+    s.shutdown(socket.SHUT_WR)
+    s.close()
+
+except KeyboardInterrupt:
+    sys.exit()
+
+except socket.gaierror:
+    print ('Hostname could not be resolved')
+    sys.exit()
+
+except socket.error:
+    print ('Could not connect to server')
+    sys.exit()
