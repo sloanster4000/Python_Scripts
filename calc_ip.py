@@ -1,28 +1,19 @@
 #!/usr/bin/env python3
 # This script is a simple IP calculator
-# 10/13/2016:      Initial version
-# 5/9/2017:        Add argparse module for command line flags.
-#Copyright (c) 2018 Sloanster4000
-#Licensed under the terms of LICENSE included in this project
+# 10/13/2016:       Initial version [ERS]
+# 5/9/2017:         Add argparse module for command line flags.
+# 11/16/2020:       Remove argparse remove IPAddress module
+import ipaddress
 
-from netaddr import IPAddress, IPNetwork, IPRange
-from argparse import ArgumentParser
+IADD = input("IP: " )
+MASK = input("Subnet: ")
 
-def parse_cl():
-    parser = ArgumentParser(description='Simple IP Calculator')
-    parser.add_argument('-i', '--ip', required=True, help='IP address')
-    parser.add_argument('-s', '--sub', required=True, help='SubnetMask')
-    return parser.parse_args()
-
-def calc(ip, sub):
-    sub = IPAddress(sub).netmask_bits()
-    net = ('{}/{}'.format(ip, sub))
-    ip = IPNetwork(net)
-    print('Ip', ip)
-    print('SubnetID', ip.network)
-    print('Broadcast', ip.broadcast)
-    print('Range', ip.network +1, ip.broadcast -1)
-
-if __name__ == '__main__':
-    args = parse_cl()
-    calc(args.ip, args.sub)
+host = ipaddress.IPv4Address(IADD)
+net = ipaddress.IPv4Network(IADD + '/' + MASK, False)
+print('IP:', IADD)
+print('Mask:', MASK)
+print('Subnet:', ipaddress.IPv4Address(int(host) & int(net.netmask)))
+print('Host:', ipaddress.IPv4Address(int(host) & int(net.hostmask)))
+print('Broadcast:', net.broadcast_address)
+for address in net:
+    print('Range:', address)
