@@ -21,4 +21,3 @@ except requests.exceptions.HTTPError as err:
     print('Http Error Code ' + str(err))
 except requests.exceptions.RequestException as e:
     print('A connection error occurred: ' + str(e))
-    
