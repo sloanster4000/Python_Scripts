@@ -1,0 +1,57 @@
+#!/usr/bin/env python
+import base64
+import argparse
+parser = argparse.ArgumentParser(description="Simple File Encryptor Script")
+parser.add_argument("file", help="File to encrypt/decrypt")
+parser.add_argument("-s", "--string", dest="string", action="store_true",
+                    help="Whether to generate a new key or use existing")
+parser.add_argument("-e", "--encode", action="store_true",
+                    help="Whether to encrypt the file, only -e or -d can be specified.")
+parser.add_argument("-d", "--decode", action="store_true",
+                    help="Whether to decrypt the file, only -e or -d can be specified.")
+args = parser.parse_args()
+
+
+def encode(file):
+    with open(file, "rb") as File:
+        str = base64.b64encode(File.read())
+    pf = open(file + ".new", "wb")
+    pf.write(str)
+    pf.close()
+
+
+def decode(file):
+    with open(file, "rb") as File:
+        str = base64.b64decode(File.read())
+    pf = open(file + ".new", "wb")
+    pf.write(str)
+    pf.close()
+
+
+def s_encode(string):
+    print(base64.b64encode(string))
+
+
+def s_decode(string):
+    print(base64.b64decode(string))
+
+
+file = args.file
+string = args.string
+encode_ = args.encode
+decode_ = args.decode
+if file:
+    if encode_ and decode_:
+        raise TypeError("Please specify whether you want to encode or decode.")
+    elif encode_:
+        encode(file)
+    elif decode_:
+        decode(file)
+
+if string:
+    if encode_ and decode_:
+        raise TypeError("Please specify whether you want to encode or decode.")
+    elif encode_:
+        s_encode(string)
+    elif decode_:
+        s_decode(string)
