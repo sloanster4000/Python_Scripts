@@ -1,0 +1,17 @@
+from cryptography.fernet import Fernet
+
+
+def retreive():  # Retreive Script Secrets in File #
+    key = "key.key"
+    pw = "secrets.txt"
+    secrets = []
+    f = Fernet(open(key, 'rb').read())
+    with open(pw, 'rb') as file:
+        encrypted_data = file.read()
+        decrypted_data = f.decrypt(encrypted_data)
+        secrets.append(decrypted_data.decode('UTF-8'))
+        for s in secrets:
+            user = s.split('\n')[0].replace("\r", "")
+            password = s.split('\n')[1].replace("\r", "")
+            license = s.split('\n')[2]
+        return user, password, license
