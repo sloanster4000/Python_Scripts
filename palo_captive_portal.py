@@ -3,11 +3,7 @@ import requests
 from getpass import getpass
 from bs4 import BeautifulSoup
 from requests.packages import urllib3
-
-try:
-    urllib3.disable_warnings()
-except Exception as err:
-    pass
+requests.packages.urllib3.disable_warnings()
 
 user = input('username: ')
 pw = getpass("Enter password for " + user + " : ")
