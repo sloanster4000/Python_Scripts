@@ -14,12 +14,12 @@ args = parser.parse_args()
 
 def write_key(file):  # Generates a key and save it into a file
     key = Fernet.generate_key()
-    with open(file + ".key", "wb") as key_file:
+    with open(file.rsplit('.', 1)[0] + ".key", "wb") as key_file:
         key_file.write(key)
 
 
 def load_key(file):  # Loads the key from the current directory named `key.key`
-    return open(file + ".key", "rb").read()
+    return open(file.rsplit('.', 1)[0] + ".key", "rb").read()
 
 
 def encrypt(filename, key):  # Given a filename (str) and key (bytes), it encrypts the file and write it
