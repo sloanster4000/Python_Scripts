@@ -2,13 +2,12 @@
 import base64
 import argparse
 parser = argparse.ArgumentParser(description="Simple File Encryptor Script")
-parser.add_argument("file", help="File to encrypt/decrypt")
-parser.add_argument("-s", "--string", dest="string", action="store_true",
-                    help="Whether to generate a new key or use existing")
-parser.add_argument("-e", "--encode", action="store_true",
-                    help="Whether to encrypt the file, only -e or -d can be specified.")
-parser.add_argument("-d", "--decode", action="store_true",
-                    help="Whether to decrypt the file, only -e or -d can be specified.")
+f_group = parser.add_mutually_exclusive_group(required=True)
+f_group.add_argument("-f", "--file", action="store_true", help="Filename")
+f_group.add_argument("-s", "--string", action="store_true", help="String")
+s_group = parser.add_mutually_exclusive_group(required=True)
+s_group.add_argument("-e", "--encode", action="store_true", help="Whether to encode the file")
+s_group.add_argument("-d", "--decode", action="store_true", help="Whether to decode the file")
 args = parser.parse_args()
 
 
@@ -36,11 +35,10 @@ def s_decode(string):
     print(base64.b64decode(string))
 
 
-file = args.file
-string = args.string
 encode_ = args.encode
 decode_ = args.decode
-if file:
+if args.file:
+    file = input("file path: ")
     if encode_ and decode_:
         raise TypeError("Please specify whether you want to encode or decode.")
     elif encode_:
@@ -48,7 +46,8 @@ if file:
     elif decode_:
         decode(file)
 
-if string:
+if args.string:
+    string = input('input string: ')
     if encode_ and decode_:
         raise TypeError("Please specify whether you want to encode or decode.")
     elif encode_:
