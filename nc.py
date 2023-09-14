@@ -1,3 +1,4 @@
+"""Module providing NETCAT Function"""
 #!/usr/bin/env python3
 # This script is a netcat replacment written in python
 # 05/08/2017:   Initial version [ERS]
@@ -10,15 +11,15 @@ import sys
 import socket
 import argparse
 
-#Accept aguments from user input
+# Accept aguments from user input
 parser = argparse.ArgumentParser(description='Netcat like port checker')
 parser.add_argument('host', help="Host address")
 parser.add_argument('port', help="Host port", type=int)
 parser.add_argument('-u', '--udp', help="Attempt a UDP connection", action='store_true')
 args = parser.parse_args()
 
-#Attempt a UDP connection
-if args.udp == False:
+# Attempt a UDP connection
+if args.udp is False:
     try:
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.settimeout(5.5)
@@ -31,15 +32,15 @@ if args.udp == False:
         sys.exit()
 
     except socket.gaierror:
-        print ('Hostname could not be resolved')
+        print('Hostname could not be resolved')
         sys.exit()
 
     except socket.error:
-        print ('Could not connect to server')
+        print('Could not connect to server')
         sys.exit()
 
-#Attempt a TCP connection
-if args.udp == True:
+# Attempt a TCP connection
+if args.udp is True:
     try:
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         s.settimeout(5.5)
@@ -52,9 +53,9 @@ if args.udp == True:
         sys.exit()
 
     except socket.gaierror:
-        print ('Hostname could not be resolved')
+        print('Hostname could not be resolved')
         sys.exit()
 
     except socket.error:
-        print ('Could not connect to server')
+        print('Could not connect to server')
         sys.exit()
